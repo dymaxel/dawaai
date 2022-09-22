@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="Product">
+        <t t-jquery="span.price-tag" t-operation="after">
+            <t t-if="product.is_combo and widget.pos.config.enable_combo">
+                <div>
+                    Combo Pack
+                </div>
+            </t>
+        </t>
+    </t>
+
+    <!-- <t t-name="POSComboProductPopup">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput pos_combo_product_popup">
+                <p class="title">Combo Product</p>
+                <div class="combo_product_container">
+                    <div class="sub_product_container">
+                        <div class="combo_product_header">
+                            <span>
+                                Required Products
+                            </span>
+                            <div class="collaps_div fix_products">
+                                <i class="fa fa-angle-up"></i>
+                            </div>
+                        </div>
+                        <div class="combo_header_body">
+                            <t t-if="widget.new_combo_products_details">
+	                            <t t-foreach="widget.new_combo_products_details" t-as="record">
+	                                <t t-if="record.require">
+	                                    <t t-foreach="record.product_details" t-as="product_detail">
+	                                        <t t-set="product" t-value="widget.pos.db.get_product_by_id(product_detail.product_id)"/>
+	                                        <span class='product product_content fix_product selected' t-att-data-product-id="product.id">
+	                                            <div class="product-img">
+	                                                <img t-att-src='widget.pos.gui.screen_instances.products.product_list_widget.get_product_image_url(product)' />
+	                                                <span class="product-qty">
+	                                                    <t t-esc="product_detail.used_time"/>
+	                                                </span>
+	                                                <div class="selected_product">
+	                                                    Selected
+	                                                </div>
+	                                            </div>
+	                                            <div class="product-name">
+	                                                <t t-esc="product.display_name" />
+	                                            </div>
+	                                        </span>
+	                                    </t>
+	                                </t>
+	                            </t>
+                            </t>
+                        </div>
+                        <div class="combo_product_header2">
+                            <span>
+                                Optional Products
+                            </span>
+                            <div class="collaps_div selective_products">
+                                <i class="fa fa-angle-up"></i>
+                            </div>
+                        </div>
+                        <div class="combo_header2_body">
+                            <t t-if="widget.new_combo_products_details">
+                                <t t-foreach="widget.new_combo_products_details" t-as="record">
+                                    <t t-if="!record.require">
+                                        <div class="category_data" t-att-categ-id="record.pos_category_id[0]">
+                                            <div class="categ_tile">
+                                                <div class="categ_name">
+                                                    <div>
+                                                        <t t-esc="record.pos_category_id[1]"/>
+                                                    </div>
+                                                    <div class="blinking" style="text-align:right;">
+                                                        <span style="padding-right: 10px;">
+                                                            Choose Any <t t-esc="record.no_of_items"/>
+                                                        </span>
+                                                    </div>
+                                                </div>
+					                            <div class="products_list" t-att-id="record.pos_category_id[0]">
+	                                                <t t-foreach="record.product_details" t-as="product_detail">
+	                                                    <t t-set="product" t-value="widget.pos.db.get_product_by_id(product_detail.product_id)"/>
+	                                                    <span t-att-class="product_detail.used_time > 0 ? 'product product_content selective_product selected' : 'product product_content selective_product'"
+	                                                          t-att-data-product-id="product.id" 
+	                                                          t-att-data-categ-id="record.pos_category_id[0]"
+	                                                          t-att-data-line-id="record.id"
+	                                                          t-att-title="product.display_name">
+	                                                        <div class="product-img">
+	                                                            <img t-att-src='widget.pos.gui.screen_instances.products.product_list_widget.get_product_image_url(product)' />
+                                                                <span class="product-qty">
+                                                                    <t t-esc="product_detail.used_time"/>
+                                                                </span>
+	                                                            <span class="product-remove">
+                                                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                                                </span>
+	                                                            <div class="selected_product">
+	                                                                Selected
+	                                                            </div>
+	                                                        </div>
+                                                            <div class="product-name">
+	                                                            <t t-esc="product.display_name"/>
+	                                                        </div>
+	                                                    </span>
+	                                                </t>
+	                                            </div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </t>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="button confirm">
+                        OK
+                    </div>
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t> -->
+
+    <t t-name="POSComboProductPopup">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput pos_combo_product_popup">
+                <p class="title">Combo Product</p>
+                <div class="combo_product_container">
+                    <div class="sub_product_container">
+                        <div class="combo_product_header">
+                            <span>
+                                Required Products
+                            </span>
+                            <div class="collaps_div fix_products">
+                                <i class="fa fa-angle-up"></i>
+                            </div>
+                        </div>
+                        <div class="combo_header_body">
+                            <t t-if="widget.new_combo_products_details">
+                                <t t-foreach="widget.new_combo_products_details" t-as="record">
+                                    <t t-if="record.require">
+                                        <t t-foreach="record.product_details" t-as="product_detail">
+                                            <t t-set="product" t-value="widget.pos.db.get_product_by_id(product_detail.product_id)"/>
+                                            <span class='product product_content fix_product selected' t-att-data-product-id="product.id">
+                                                <div class="product-img">
+                                                    <img t-att-src='widget.pos.gui.screen_instances.products.product_list_widget.get_product_image_url(product)' />
+                                                    <span class="product-qty">
+                                                        <t t-esc="product_detail.used_time"/>
+                                                    </span>
+                                                    <div class="selected_product">
+                                                        Selected
+                                                    </div>
+                                                </div>
+                                                <div class="product-name">
+                                                    <t t-esc="product.display_name" />
+                                                </div>
+                                            </span>
+                                        </t>
+                                    </t>
+                                </t>
+                            </t>
+                        </div>
+                        <div class="combo_product_header2">
+                            <span>
+                                Optional Products
+                            </span>
+                            <div class="collaps_div selective_products">
+                                <i class="fa fa-angle-up"></i>
+                            </div>
+                        </div>
+                        <div class="combo_header2_body">
+                            <t t-if="widget.new_combo_products_details">
+                                <t t-foreach="widget.new_combo_products_details" t-as="record">
+                                    <t t-if="!record.require">
+                                        <div class="category_data" t-att-categ-id="record.category_id[0]">
+                                            <div class="categ_tile">
+                                                <div class="categ_name">
+                                                    <div>
+                                                        <t t-esc="record.category_id[1]"/>
+                                                    </div>                               
+                                                    <div>
+                                                        Selected Quantity : 
+                                                        <t t-if="record.display_item">
+                                                            <t t-esc="record.display_item"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            0
+                                                        </t>
+                                                    </div>                                              
+                                                    <div class="blinking" style="text-align:right;">
+                                                        <span style="padding-right: 10px;">
+                                                            Choose Any <t t-esc="record.no_of_items"/>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="products_list" t-att-id="record.category_id[0]">
+                                                    <t t-foreach="record.product_details" t-as="product_detail">
+                                                        <t t-set="product" t-value="widget.pos.db.get_product_by_id(product_detail.product_id)"/>
+                                                        <span t-att-class="product_detail.used_time > 0 ? 'product product_content selective_product selected' : 'product product_content selective_product'"
+                                                              t-att-data-product-id="product.id" 
+                                                              t-att-data-categ-id="record.category_id[0]"
+                                                              t-att-data-line-id="record.id"
+                                                              t-att-title="product.display_name">
+                                                            <div class="product-img">
+                                                                <img t-att-src='widget.pos.gui.screen_instances.products.product_list_widget.get_product_image_url(product)' />
+                                                                <span class="product-qty">
+                                                                    <t t-esc="product_detail.used_time"/>
+                                                                </span>
+                                                                <span class="product-remove">
+                                                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                                                </span>
+                                                                <div class="selected_product">
+                                                                    Selected
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-name">
+                                                                <t t-esc="product.display_name"/>
+                                                            </div>
+                                                        </span>
+                                                    </t>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </t>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="button confirm">
+                        OK
+                    </div>
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-extend="Orderline">
+        <t t-jquery="span.product-name" t-operation="append">
+            <t t-if="widget.pos.config.edit_combo">
+                <t t-if="line.get_product().is_combo and line.get_product().product_combo_ids.length > 0 and widget.pos.config.enable_combo">
+                    <i class="fa fa-pencil-square combo-popup-icon" aria-hidden="true" style="cursor: pointer;color:green;"></i>
+                </t>
+            </t>
+        </t>
+        <t t-jquery="ul.info-list li:first" t-operation="append">
+            <t t-if="line.get_combo_prod_info()">
+                <li class="info">
+                    <t t-foreach="line.get_combo_prod_info()" t-as="prod_info"> 
+                        <div style="margin-left: 15px;">
+                            &#8594;<t t-esc="prod_info.product.display_name"/> : <t t-esc="prod_info.qty"/>
+                            <t t-if="widget.pos.config.hide_uom">
+                                <span>Quantity</span>
+                            </t>
+                            <t t-if="!widget.pos.config.hide_uom">
+                                <t t-if="prod_info.product.uom_id[0]">
+                                     <t t-esc="prod_info.product.uom_id[1]"/>
+                                </t>
+                            </t>
+                        </div>
+                    </t>
+                </li>
+            </t>
+        </t>
+    </t>
+
+    <t t-extend="OrderReceipt">
+        <t t-jquery='div[class="orderlines"]' t-operation='replace'>
+            <div class='orderlines'>
+                <div t-foreach="orderlines" t-as="orderline">
+                    <div>
+                        <t t-esc="orderline.get_product().display_name"/>
+                        <span>
+                            <t t-esc="orderline.get_quantity_str_with_unit()"/>
+                        </span>
+                        <span style="float:right;">
+                            <t t-esc="widget.format_currency(orderline.get_display_price())"/>
+                        </span>
+                        <t t-if="orderline.get_combo_prod_info()">
+                            <div>
+	                            <div t-foreach="orderline.get_combo_prod_info()" t-as="prod_info">
+	                                <div>
+	                                    <span class="pos-disc-font">
+	                                        <span><t t-esc="prod_info.product.display_name"/></span>
+	                                        <t t-esc="prod_info.qty"/><t t-if="widget.pos.config.hide_uom"> Quantity
+                                            </t>
+                                            <t t-if="!widget.pos.config.hide_uom">
+                                                 <t t-if="prod_info.product.uom_id[0]">
+                                                      <t t-esc="prod_info.product.uom_id[1]"/>
+                                                 </t>
+                                            </t>
+	                                    </span>
+	                                </div>
+	                            </div>
+                            </div>
+                        </t>  
+                         <t t-if="orderline.get_discount() > 0">
+                            <div class="pos-disc-font">
+                                With a <t t-esc="orderline.get_discount()"/>% discount
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </t>
+
+    <t t-extend="OrderReceipt">
+        <t t-jquery="[t-if='!simple']" t-operation="after">
+            <t t-if="line.combo_prod_info">
+                <t t-foreach="line.combo_prod_info" t-as="combo_detail">
+                    <span indent='1'>
+		               <span>
+		                   <t t-esc="combo_detail.product.display_name"/>
+		                   <t t-esc="combo_detail.qty"/>
+                           <t t-if="!widget.pos.config.hide_uom">
+                                 <t t-if="combo_detail.product.uom_id[0]">
+                                      <t t-esc="combo_detail.product.uom_id[1]"/>
+                                 </t>
+                           </t>
+		               </span>
+	              </span>
+	          </t>
+            </t>
+        </t>
+    </t>
+
+    <t t-extend="OrderChangeReceipt">
+        <t t-jquery="[t-foreach='changes.cancelled']" t-operation="replace">
+            <t t-foreach="changes.cancelled" t-as="change">
+                <line>
+                    <left><value><t t-esc="change.qty" /></value></left>
+                    <right><t t-esc="change.name_wrapped[0]" /></right>
+                </line>
+                <t t-if="change.combo_info">
+                    <t t-foreach="change.combo_info" t-as="combo_detail">
+                        <line>
+                            <left><value><t t-esc="combo_detail.qty" /></value></left>
+                            <right><t t-esc="combo_detail.product.display_name" /></right>
+                        </line>
+                    </t>
+                </t>
+                <t t-call="NameWrapped"/>
+                <t t-if="change.note">
+                    <line>
+                        <left>NOTE</left>
+                        <right>...</right>
+                    </line>
+                    <div><span font='b' bold='off' line-ratio='0.4' indent='1' width='30'>--- <t t-esc="change.note" /></span></div>
+                    <line></line>
+                </t>
+                <div><span font='b' bold='off' line-ratio='0.4' indent='1'>
+                    ---------------------------------------------------------------
+                </span></div>
+            </t>
+        </t>
+        <t t-jquery="[t-foreach='changes.new']" t-operation="replace">
+            <t t-foreach="changes.new" t-as="change">
+                <line>
+                    <left><value><t t-esc="change.qty" /></value></left>
+                    <right><t t-esc="change.name_wrapped[0]" /></right>
+                </line>
+                <t t-if="change.combo_info">
+                    <t t-foreach="change.combo_info" t-as="combo_detail">
+                        <line>
+                            <left><value><t t-esc="combo_detail.qty" /></value></left>
+                            <right><t t-esc="combo_detail.product.display_name" /></right>
+                        </line>
+                    </t>
+                </t>
+                <t t-call="NameWrapped"/>
+                <t t-if="change.note">
+                    <line>
+                        <left>NOTE</left>
+                        <right>...</right>
+                    </line>
+                    <div><span font='b' bold='off' line-ratio='0.4' indent='1' width='30'>--- <t t-esc="change.note" /></span></div>
+                    <line></line>
+                </t>
+                <div><span font='b' bold='off' line-ratio='0.4' indent='1'>
+                    ---------------------------------------------------------------
+                </span></div>
+            </t>
+        </t>
+    </t>
+
+   <t t-extend="BillReceipt">
+        <t t-jquery="[t-if='!simple']" t-operation="after">
+            <t t-if="line.combo_prod_info">
+                <t t-foreach="line.combo_prod_info" t-as="combo_detail">
+                    <line indent='1'>
+		               <left>
+		                   <t t-esc="combo_detail.product.display_name"/>
+		                   <t t-esc="combo_detail.qty"/>
+                           <t t-if="!widget.pos.config.hide_uom">
+                                 <t t-if="combo_detail.product.uom_id[0]">
+                                      <t t-esc="combo_detail.product.uom_id[1]"/>
+                                 </t>
+                           </t>
+		               </left>
+	              </line>
+	          </t>
+            </t>
+        </t>
+    </t>
+
+</templates>

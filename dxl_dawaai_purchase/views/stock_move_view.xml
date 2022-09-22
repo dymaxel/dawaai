@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_stock_move_nosuggest_operations_inherit_dawaai" model="ir.ui.view">
+        <field name="name">stock.move.operations.nosuggest.form.inherit.dawaai</field>
+        <field name="model">stock.move.line</field>
+        <field name="priority">1100</field>
+         <field name="mode">extension</field>
+        <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='qty_done']" position="before">
+                <field name="tracking" invisible="1"/>
+                <field name="life_date" attrs="{'invisible': [('tracking', '!=', 'lot')], 'required': [('tracking', '=', 'lot')]}"/>
+                <field name="current_mrp" readonly="1" force_save="1"/>
+                <field name="new_mrp"/>
+            </xpath>
+            <xpath expr="//field[@name='qty_done']" position="after">
+                <field name="pack_qty"/>
+                <field name="purchase_uom" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_picking_form_inherit_dawaai" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit.dawaai</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='move_ids_without_package']//tree//field[@name='product_uom_qty']" position="after">
+                <field name="mrp_state" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='move_ids_without_package']//tree" position="attributes">
+                <attribute name="decoration-danger">mrp_state == True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='move_ids_without_package']//tree//field[@name='reserved_availability']" position="before">
+                <field name="pack_qty" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                <field name="purchase_uom"/>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_stock_quant_tree_editable_inherit_dawaai">
+        <field name="name">stock.quant.tree.editable.inherit.dawwai</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_editable"></field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lot_id']" position="after">
+                <field name="current_mrp"/>
+                <field name="new_mrp"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_stock_rule_form_view_inherit_dawaai" model="ir.ui.view">
+        <field name="name">stock.rule.form.inherit.dawaai.route</field>
+        <field name="model">stock.rule</field>
+        <field name="inherit_id" ref="stock.view_stock_rule_form"/>
+        <field name="arch" type="xml">
+            <field name="auto" position="after">
+                <field name="is_grn"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

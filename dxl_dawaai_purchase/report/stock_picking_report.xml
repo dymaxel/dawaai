@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_picking_inherit_dawaai" inherit_id="stock.report_picking">
+        <xpath expr="//th[@name='th_serial_number']" position="before">
+            <th name="th_expiry" class="text-center" t-if="has_serial_number">
+               <strong>Expiry</strong>
+            </th>
+        </xpath>
+        <xpath expr="//td[@t-if='has_serial_number']" position="before">
+            <td class=" text-center h6" t-if="has_serial_number">
+                <span t-field="ml.life_date"/>
+            </td>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<templates id="template" xml:space="preserve">
+    <t t-name="sale_combo_image">
+        <t t-if="src">
+            <t t-if="src.optional">
+                <t t-set="i" t-value="src.optional.length"/>
+            </t>
+            <t t-if="src.required">
+                <t t-set="j" t-value="src.required.length"/>
+            </t>
+            <t t-if="src.required">
+                <div class="combo_product_header">
+                    <span style="color:#fff;">Required Products</span>
+                    <div class="collaps_div fix_products">
+                        <i t-attf-class="fa fa-angle-up"></i>
+                    </div>
+                </div>
+                <div class="row1">
+                    <t t-if="j">
+                        <t t-foreach="j" t-as="val">
+                            <div class="column1 img selected1">
+                                <span t-att-data-product-id="src.required[val][0]">
+                                    <img class="combo_img" t-att-src='src.required[val][3]' alt="Image Not Available"/>
+                                    <div class="name1">
+                                        <t t-esc="src.required[val][1]"/>
+                                    </div>
+                                </span>
+                            </div>
+                        </t>
+                    </t>
+                </div>
+            </t>
+
+            <div class="combo_product_header2 optional">
+                <span style="color:#fff;">Optional Products</span>
+                <div class="collaps_div selective_products">
+                    <i class="fa fa-angle-up"></i>
+                </div>
+            </div>
+            <div class="row">
+                <t t-if="src and src.keys">
+                <t t-foreach="src.keys" t-as="val">
+                    <div class="container combo">
+                        <div class="back">
+                            <t t-if="src[val]">
+                                <span style="color:#fff;font-family: 'Times New Roman';">Category - <t t-esc="val"/></span>
+
+                                <span class="blinking" style="color: #fff;float:right;padding-right: 10px;font-family: 'Times New Roman';">
+                                        Choose Any <t t-esc="src[val]"/>
+                                </span>
+                            </t>
+                        </div>
+                        <t t-foreach="src.optional[val].length" t-as="no">
+                            <div class="main_class" style="height:0px; padding: 0px 13px;">
+                                <i class="fa fa-times product_remove"/>
+                                <div t-att-class="src.optional[val][no][4] ? 'column img selected' : 'column img' " >
+                                    <span t-att-data-product-id="src.optional[val][no][0]" t-att-data-categ-name="src[val]" t-att-data-categ-id="val">
+    <!--                                    <div class="close1"><i class="fa fa-times"/></div>-->
+                                        <img t-att-src="src.optional[val][no][4] ? src.optional[val][no][4] : src.optional[val][no][3]" class="combo_img"
+                                             alt="Image Not Available"/>
+                                        <div class="name">
+                                            <t t-esc="src.optional[val][no][1]" style=""/>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+                </t>
+            </div>
+        </t>
+    </t>
+</templates>

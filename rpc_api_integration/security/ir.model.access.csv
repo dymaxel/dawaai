@@ -1,0 +1,15 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_partner_queue,access_res_partner_queue,model_res_partner_queue,base.group_user,1,1,1,1
+access_res_partner_log,access_res_partner_log,model_res_partner_log,base.group_user,1,1,1,1
+access_product_product_queue,access_product_product_queue,model_product_product_queue,base.group_user,1,1,1,1
+access_product_product_log,access_product_product_log,model_product_product_log,base.group_user,1,1,1,1
+access_product_category_queue,access_product_category_queue,model_product_category_queue,base.group_user,1,1,1,1
+access_product_category_log,access_product_category_log,model_product_category_log,base.group_user,1,1,1,1
+access_sale_order_queue,access_sale_order_queue,model_sale_order_queue,base.group_user,1,1,1,1
+access_sale_order_log,access_sale_order_log,model_sale_order_log,base.group_user,1,1,1,1
+access_sale_order_queue_line,access_sale_order_queue_line,model_sale_order_queue_line,base.group_user,1,1,1,1
+access_purchase_order_queue,access_purchase_order_queue,model_purchase_order_queue,base.group_user,1,1,1,1
+access_purchase_order_log,access_purchase_order_log,model_purchase_order_log,base.group_user,1,1,1,1
+access_purchase_order_queue_line,access_purchase_order_queue_line,model_purchase_order_queue_line,base.group_user,1,1,1,1
+access_product_brand_queue,access_product_brand_queue,model_product_brand_queue,base.group_user,1,1,1,1
+access_product_brand_log,access_product_brand_log,model_product_brand_log,base.group_user,1,1,1,1

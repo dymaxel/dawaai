@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_template_form_view_inherit_dawai" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.dawai</field>
+        <field name="model">product.template</field>
+        <field name="priority" eval="50"/>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <field name="company_id" position="before">
+                <field name="mrp"/>
+                <field name="readonly_default_code" invisible="1"/>
+            </field>
+            <field name="default_code" position="attributes">
+                <attribute name="attrs">{'invisible': [('product_variant_count', '>', 1)], 'readonly': [('readonly_default_code', '=', False)]}</attribute>
+            </field>
+        </field>
+    </record>
+    <record id="product_normal_form_view_inherit_dawaai" model="ir.ui.view">
+        <field name="name">product.product.form.view.inherit.dawaai</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <field name="default_code" position="after">
+                <field name="readonly_default_code" invisible="1"/>
+            </field>
+            <xpath expr="//field[@name='default_code']" position="attributes">
+                <attribute name="attrs">{'readonly': [('readonly_default_code', '=', False)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_template_form_view_inheri_dxl" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.dxl</field>
+        <field name="model">product.template</field>
+        <field name="priority" eval="50"/>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr='//notebook' position='inside'>
+                <page string="Product Extra Attributes">
+                	<group>
+                		<group>
+                			<field name="class_id"/>
+                			<field name="sku"/>
+                			<field name="expiry_validation"/>
+                			<field name="pack_size"/>
+                			<field name="strip_size"/>
+                		</group>
+                	</group>
+	            </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="sale_order_view_form_inherit_dawaai" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.dawaai</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="payment_term_id" position="after">
+                <field name="customer_type" string="Order Type"/>
+            </field>
+        </field>
+    </record>
+    <record id="view_location_form_inherit_dawaai" model="ir.ui.view">
+        <field name="name">stock.location.form.inherit.dawaai</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_form"/>
+        <field name="arch" type="xml">
+            <field name="return_location" position="after">
+                <field name="location_type" string="Location Type"/>
+            </field>
+        </field>
+    </record>
+</odoo>

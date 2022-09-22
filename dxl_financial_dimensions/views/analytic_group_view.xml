@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_account_analytic_group_form_view_inherit" model="ir.ui.view">
+            <field name="name">account.analytic.group.form</field>
+            <field name="model">account.analytic.group</field>
+            <field name="inherit_id" ref="analytic.account_analytic_group_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='parent_id']" position="before">
+                    <field name="level_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="account_analytic_group_tree_view_inherit_dxl" model="ir.ui.view">
+            <field name="name">account.analytic.group.tree.dxl</field>
+            <field name="model">account.analytic.group</field>
+            <field name="inherit_id" ref="analytic.account_analytic_group_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="level_id"/>
+                    <field name="level"/>
+                    <field name="parent_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

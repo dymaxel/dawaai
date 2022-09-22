@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+    <report
+            id="action_report_saleorder_combo"
+            string="Sale With Combo"
+            model="sale.order"
+            report_type="qweb-pdf"
+            file="aspl_sale_combo_ee.sale_combo_template"
+            name="aspl_sale_combo_ee.sale_combo_template"
+        />
+
+    </data>
+</odoo>

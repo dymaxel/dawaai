@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="group_change_product_mrp" model="res.groups">
+            <field name="name">Change Product MRP</field>
+        </record>
+        <record id="group_edit_product_code" model="res.groups">
+            <field name="name">Edit Internal Ref</field>
+        </record>
+        <record id="group_purchase_mrp_approval" model="res.groups">
+            <field name="name">Receipt Validation</field>
+        </record>
+        <record id="group_reset_purchase" model="res.groups">
+            <field name="name">Reset PO</field>
+        </record>
+        <record id="group_jit_purchase" model="res.groups">
+            <field name="name">JIT PO</field>
+        </record>
+        <record id="group_non_jit_purchase" model="res.groups">
+            <field name="name">Non JIT PO</field>
+        </record>
+        <record id="rule_purchase_order_jit" model="ir.rule">
+            <field name="name">Rule JIT PO</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="domain_force">[('jit', '=', True)]</field>
+            <field name="groups" eval="[(4, ref('dxl_dawaai_purchase.group_jit_purchase'))]"/>
+        </record>
+        <record id="rule_purchase_order_non_jit" model="ir.rule">
+            <field name="name">Rule Non JIT PO</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="domain_force">[('jit', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('dxl_dawaai_purchase.group_non_jit_purchase'))]"/>
+        </record>
+    </data>
+</odoo>

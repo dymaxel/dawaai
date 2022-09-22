@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_partner_queue_tree" model="ir.ui.view">
+        <field name="name">res.partner.queue.tree</field>
+        <field name="model">res.partner.queue</field>
+        <field name="arch" type="xml">
+            <tree create="0" edit="0" decoration-danger="state == 'failed'" decoration-success="state == 'done'">
+                <field name="name"/>
+                <field name="create_date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="res_partner_queue_form" model="ir.ui.view">
+        <field name="name">res.partner.queue.form</field>
+        <field name="model">res.partner.queue</field>
+        <field name="arch" type="xml">
+            <form string="Customer Queue" create="0">
+                <header>
+                    <button
+                            name="action_run_queue_mannually"
+                            string="Process Queue Manually" type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible':[('state', 'in', ('done', 'cancel'))]}"/>
+                    <button name="action_force_done" string="Force Done"
+                            type="object"
+                            attrs="{'invisible':[('state', 'in', ('done', 'cancel'))]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,failed,done"/>
+                </header>
+                <sheet>
+                    <div>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="company_type"/>
+                            <field name="is_company"/>
+                            <field name="street"/>
+                            <field name="street2"/>
+                            <field name="ex_partner_id"/>
+                            <field name="odoo_record_id"/>
+                        </group>
+                        <group>
+                            <field name="mobile"/>
+                            <field name="phone"/>
+                            <field name="email"/>
+                            <field name="website"/>
+                            <field name="property_supplier_payment_term_id"/>
+                            <field name="vat"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Execution Log" name="partner_log_line">
+                            <field name="log_ids">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="create_date" string="Sync Date"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"
+                           groups="base.group_user"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="action_partner_data_queue" model="ir.actions.act_window">
+        <field name="name">Customer Queue</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner.queue</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="odoo_api_main_menu"
+        name="Odoo Integration"
+        sequence="-7"
+        web_icon="rpc_api_integration,static/description/icon.png"/>
+            
+    <!-- Main Queue Menu -->
+    <menuitem id="odoo_data_queue_menu" 
+        name="Queue" 
+        parent="rpc_api_integration.odoo_api_main_menu"
+        sequence="1"/>
+
+    <!-- For Partner Data Queue Menu -->
+    <menuitem id="odoo_partner_data_queue_menu" 
+        name="Customer Queue" 
+        parent="rpc_api_integration.odoo_data_queue_menu"
+        action="action_partner_data_queue"
+        sequence="5"/>
+
+</odoo>

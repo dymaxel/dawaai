@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_picking_form_inherit_dxl_dawaai" model="ir.ui.view">
+        <field name="name">stock.picking.view.form.dxl.dawaai</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="hide_check_availability" invisible="1"/>
+            </field>
+            <xpath expr="//button[@name='action_assign']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|',('show_check_availability', '=', False),('hide_check_availability','=',True)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_product_class_tree" model="ir.ui.view">
+        <field name="name">product.class.tree</field>
+        <field name="model">product.classification</field>
+        <field name="arch" type="xml">
+            <tree string="Product Classification">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_product_class_form" model="ir.ui.view">
+        <field name="name">product.class.form</field>
+        <field name="model">product.classification</field>
+        <field eval="12" name="priority"/>
+        <field name="arch" type="xml">
+            <form string="Product Classification">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Name" nolabel="1" required="1"/></h1>
+                    </div>    
+                </sheet>   
+            </form>
+        </field>
+    </record>
+
+    <record id="action_product_class" model="ir.actions.act_window">
+        <field name="name">Product Classification</field>
+        <field name="res_model">product.classification</field>
+        <field name="view_id" ref="view_product_class_tree"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_customer_type_tree" model="ir.ui.view">
+        <field name="name">customer.type.tree</field>
+        <field name="model">customer.type</field>
+        <field name="arch" type="xml">
+            <tree string="Customer Type">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_customer_type_form" model="ir.ui.view">
+        <field name="name">customer.type.form</field>
+        <field name="model">customer.type</field>
+        <field eval="12" name="priority"/>
+        <field name="arch" type="xml">
+            <form string="Customer Type">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Name" nolabel="1"/></h1>
+                    </div>    
+                </sheet>   
+            </form>
+        </field>
+    </record>
+
+    <record id="action_customer_type" model="ir.actions.act_window">
+        <field name="name">Customer Type</field>
+        <field name="res_model">customer.type</field>
+        <field name="view_id" ref="view_customer_type_tree"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_location_type_tree" model="ir.ui.view">
+        <field name="name">location.type.tree</field>
+        <field name="model">location.type</field>
+        <field name="arch" type="xml">
+            <tree string="Location Type">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_location_type_form" model="ir.ui.view">
+        <field name="name">location.type.form</field>
+        <field name="model">location.type</field>
+        <field eval="12" name="priority"/>
+        <field name="arch" type="xml">
+            <form string="Location Type">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Name" nolabel="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="is_shelving"/>
+                        </group>
+                    </group> 
+                </sheet>   
+            </form>
+        </field>
+    </record>
+
+    <record id="action_location_type" model="ir.actions.act_window">
+        <field name="name">Location Type</field>
+        <field name="res_model">location.type</field>
+        <field name="view_id" ref="view_location_type_tree"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem id="dxl_product_extra_attribute_menu"
+        name="Product Extra Attribute"
+        parent="stock.menu_stock_config_settings"
+        sequence="3"/>
+
+    <menuitem id="product_class"
+        name="Product Classification"
+        parent="dxl_dawaai_extra_attributes.dxl_product_extra_attribute_menu"
+        action="dxl_dawaai_extra_attributes.action_product_class"
+        sequence="1"/>
+
+    <menuitem id="customer_type"
+        name="Customer Type"
+        parent="sale.menu_sale_config"
+        action="dxl_dawaai_extra_attributes.action_customer_type"
+        sequence="100"/>
+
+    <menuitem id="location_type"
+        name="Location Type"
+        parent="stock.menu_warehouse_config"
+        action="dxl_dawaai_extra_attributes.action_location_type"
+        sequence="100"/>
+</odoo>

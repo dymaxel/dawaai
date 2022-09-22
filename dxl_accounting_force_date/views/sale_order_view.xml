@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_order_view_form_inherit_dawaai_force_date" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.dawaai.force.date</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="payment_term_id" position="after">
+                <field name="dxl_delivery_date" string="Delivery Date"/>
+                <field name="dxl_invoice_date" string="Invoice Date"/>
+                <!-- <field name="dxl_payment_date" string="Payment Date"/> -->
+            </field>
+        </field>
+    </record>
+</odoo>

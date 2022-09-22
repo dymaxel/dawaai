@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_picking_type_form_inherit_auto_split_picking" model="ir.ui.view">
+        <field name="name">Operation Types inherit auto split</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sequence_code']" position="after">
+                <field name="is_auto_split"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_picking_form_auto_split_picking" model="ir.ui.view">
+        <field name="name">stock.picking.form inherit auto split</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="src_loc_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <template id="report_picking_operation_note_template" inherit_id="stock.report_picking">
+        <xpath expr="//div[@name='div_sched_date']" position="after">
+            <div class="col-auto" name="div_source_loc">
+                <strong>Source Location:</strong>
+                <p t-field="o.src_loc_id"/>
+            </div>
+            <div class="col-auto" name="div_dest_loc">
+                <strong>Destination Location:</strong>
+                <p t-field="o.dest_loc_id"/>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="report_picking_delivery_note_template" inherit_id="stock.report_delivery_document">
+        <xpath expr="//div[@name='div_sched_date']" position="after">
+            <div class="col-auto" name="div_source_loc">
+                <strong>Source Location:</strong>
+                <p t-field="o.src_loc_id"/>
+            </div>
+            <div class="col-auto" name="div_dest_loc">
+                <strong>Destination Location:</strong>
+                <p t-field="o.dest_loc_id"/>
+            </div>
+        </xpath>
+        <xpath expr="//p//t" position="before">
+            <p t-field="o.note"/>
+        </xpath>
+    </template>
+
+</odoo>

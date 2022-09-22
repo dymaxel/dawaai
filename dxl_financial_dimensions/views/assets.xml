@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Account Financial Report Assets -->
+        <template id="account_reports_dxl" inherit_id="web.assets_backend" active="True">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/dxl_financial_dimensions/static/src/js/test.js"></script>
+            </xpath>
+        </template>
+    </data>
+</odoo>

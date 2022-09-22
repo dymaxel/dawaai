@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<odoo>
+
+	<!--  inherit partner form. -->
+	<record id="view_partner_form_tis_tds_inherit" model="ir.ui.view">
+	    <field name="name">res.partner.form.tis.tds</field>
+	    <field name="model">res.partner</field>
+	    <field name="inherit_id" ref="base.view_partner_form"/>
+	    <field name="arch" type="xml">
+	    	<xpath expr="//notebook/page[@name='sales_purchases']" position="after">
+	    		<page name="partner_tds" string="WHT">
+	    			<group>
+	    				<group>
+	    					<field name="tds_threshold_check" string="Apply WHT"/>
+	    				</group>
+	    				<group>
+	    					<field name="wht_id" domain="[('tds', '=', True)]" attrs="{'invisible': [('tds_threshold_check', '=', False)]}"/>
+	    				</group>
+	    			</group>
+	    		</page>
+	    	</xpath>
+	    </field>
+	</record>
+
+</odoo>

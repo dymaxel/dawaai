@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="purchase_order_form_inherit_dxl" model="ir.ui.view">
+            <field name="name">purchase.order.view.form.inherit.dxl</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']/tree/field[@name='account_analytic_id']" position='before'>
+                    <field name="bu"/>
+                    <field name="mob" domain="[('parent_id', '=', bu)]"/>
+                    <field name="toc" domain="[('parent_id', '=', mob)]"/>
+                    <field name="pc" domain="[('parent_id', '=', toc)]"/>
+                    <field name="loc" domain="[('parent_id', '=', pc)]"/>
+                    <field name="fun" domain="[('parent_id', '=', loc)]"/>
+                </xpath>
+                <!-- <xpath expr="//field[@name='order_line']/tree/field[@name='account_analytic_id']" position='attributes'>
+                    <attribute name="domain">[('group_id', '=', fun)]</attribute>
+                </xpath> -->
+            </field>
+        </record>
+    </data>
+</odoo>

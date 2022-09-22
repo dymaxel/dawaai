@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_order_form_inherit_dawaai" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit.dawaai</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <field name="date_order" position="after">
+                <field name="jit"/>
+            </field>
+            <xpath expr="//button[@name='button_draft']" position="attributes">
+                <attribute name="groups">dxl_dawaai_purchase.group_reset_purchase</attribute>
+            </xpath>
+            <xpath expr="//button[@name='button_done']" position="after">
+                 <button name="print_draft_bill" string="Print Draft Bill" class="btn-primary" type="object" attrs="{'invisible': [('state', 'not in', ('purchase'))]}"/>
+            </xpath>
+            <xpath expr="//tree/field[@name='product_qty']" position="after">
+                <field name="full_unit_price" string="Full Unit Price"/>
+                <field name="total_before_disc"/>
+                <field name="disc_type" string="Disc Type" optional="hide"/>
+                <field name="dw_discount" string="Discount"/>
+                <field name="total_after_disc"/>
+            </xpath>
+            <xpath expr="//tree/field[@name='price_unit']" position="replace">
+                <field name="price_unit" string="Net Price"/>
+            </xpath>
+            <xpath expr="//field[@name='notes']" position="before">
+                <group class="oe_left" style="display: flex;">
+                    <group colspan="2">
+                        <field name="disc_type" string="Discount Type"/>
+                        <field name="dw_discount" string="Amount"/>
+                    </group>
+                    <button name="apply_purchase_discount" type="object">Apply Discount</button>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

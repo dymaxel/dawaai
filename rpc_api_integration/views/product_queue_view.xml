@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_product_queue_tree" model="ir.ui.view">
+        <field name="name">product.product.queue.tree</field>
+        <field name="model">product.product.queue</field>
+        <field name="arch" type="xml">
+            <tree create="0" edit="0" decoration-danger="state == 'failed'" decoration-success="state == 'done'">
+                <field name="name"/>
+                <field name="create_date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="product_product_queue_form" model="ir.ui.view">
+        <field name="name">product.product.queue.form</field>
+        <field name="model">product.product.queue</field>
+        <field name="arch" type="xml">
+            <form string="Product Queue" create="0">
+                <header>
+                    <button
+                            name="action_run_queue_mannually"
+                            string="Process Queue Manually" type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible':[('state', 'in', ('done', 'cancel'))]}"/>
+                    <button name="action_force_done" string="Force Done"
+                            type="object"
+                            attrs="{'invisible':[('state', 'in', ('done', 'cancel'))]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,failed,done"/>
+                </header>
+                <sheet>
+                    <div>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="type"/>
+                            <field name="categ_id"/>
+                            <field name="default_code"/>
+                            <field name="barcode"/>
+                            <field name="standard_price"/>
+                            <field name="list_price"/>
+                            <field name="taxes_id"/>
+                            <field name="sale_ok"/>
+                            <field name="class_id"/>
+                            <field name="sku"/>
+                            <field name="expiry_validation"/>
+                        </group>
+                        <group>
+                            <field name="purchase_ok"/>
+                            <field name="uom_id"/>
+                            <field name="uom_po_id"/>
+                            <field name="invoice_policy"/>
+                            <field name="supplier_taxes_id"/>
+                            <field name="purchase_method"/>
+                            <field name="tracking"/>
+                            <field name="ex_product_id"/>
+                            <field name="odoo_record_id"/>
+                            <field name="pack_size"/>
+                            <field name="strip_size"/>
+                            <field name="brand_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Execution Log" name="partner_log_line">
+                            <field name="log_ids">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="create_date" string="Sync Date"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"
+                           groups="base.group_user"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_product_data_queue" model="ir.actions.act_window">
+        <field name="name">Product Queue</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.product.queue</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- For Partner Data Queue Menu -->
+    <menuitem id="odoo_product_data_queue_menu" 
+        name="Product Queue" 
+        parent="rpc_api_integration.odoo_data_queue_menu"
+        action="action_product_data_queue"
+        sequence="10"/>
+
+    <record id="product_template_form_view_inherit_odoo_api" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.odoo.api</field>
+        <field name="model">product.template</field>
+        <field name="priority" eval="50"/>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <field name='type' position='after'>
+                <!--change-->
+                <field name="platform_id" readonly="1"/>
+            </field>
+        </field>
+    </record>
+    <record id="product_uom_form_view_inherit_odoo_api" model="ir.ui.view">
+        <field name="name">uom.uom.form.inherit.odoo.api</field>
+        <field name="model">uom.uom</field>
+        <field name="inherit_id" ref="uom.product_uom_form_view"/>
+        <field name="arch" type="xml">
+            <field name='rounding' position='after'>
+                <field name="platform_id"/>
+            </field>
+        </field>
+    </record>
+</odoo>
